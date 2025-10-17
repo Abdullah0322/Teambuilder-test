@@ -5,6 +5,7 @@ import { useNextSanityImage } from "next-sanity-image";
 import { ProductsTypes } from "./page";
 import { memo, useContext, useEffect, useState } from "react";
 import { UC } from "./context";
+import { formatPriceToYen } from "../lib/utils";
 
 interface ProductsProps {
   products: ProductsTypes;
@@ -43,13 +44,6 @@ const Products = ({ products, gap }: ProductsProps) => {
     } else {
       localStorage.setItem("trxfav", JSON.stringify([product]));
     }
-  };
-
-  const formatPriceToYen = (price) => {
-    return new Intl.NumberFormat("ja-JP", {
-      style: "currency",
-      currency: "JPY",
-    }).format(price);
   };
 
   return (

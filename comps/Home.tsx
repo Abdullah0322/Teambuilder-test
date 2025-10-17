@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { BannerDataTypes, ProductsTypes } from "../app/page";
 import FooterBanner from "../comps/FooterBanner";
 import MainBanner from "./MainBanner";
@@ -13,13 +13,15 @@ interface HomeProps {
 const Home = ({ products, bannerData }: HomeProps) => {
   const [sortOption, setSortOption] = useState("low-to-high");
 
-  const sortedProducts = [...products].sort((a, b) => {
-    if (sortOption === "low-to-high") {
-      return a.price - b.price; // Sort from low to high
-    } else {
-      return b.price - a.price; // Sort from high to low
-    }
-  });
+  const sortedProducts = useMemo(() => {
+    return [...products].sort((a, b) => {
+      if (sortOption === "low-to-high") {
+        return a.price - b.price;
+      } else {
+        return b.price - a.price;
+      }
+    });
+  }, [products, sortOption]);
 
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
